@@ -5,6 +5,8 @@ import com.example.ProductionModule.entity.ProductionOrders;
 import com.example.QuantityandInventoryModule.InspectionResult;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +26,11 @@ public class QualityInspection {
     @Enumerated(EnumType.STRING)
     private InspectionResult inspection_result;
     private String remarks;
-
     private LocalDateTime inspected_at;
+    @CreationTimestamp
+    private LocalDateTime created_at;
+    private String created_by;
+    @UpdateTimestamp
+    private LocalDateTime last_modified_at;
+    private String last_modified_by;
 }
