@@ -1,6 +1,4 @@
 package com.example.QuantityandInventoryModule.dto;
-import com.example.PlantsCarModule.entity.CarModel;
-import com.example.ProductionModule.entity.ProductionOrders;
 import com.example.QuantityandInventoryModule.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -20,15 +18,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class VehicleInventoryDto {
 
-    private int id;
     @NotBlank
     private String vin;
     @NotBlank
-    //foreign key
-    private ProductionOrders production_orders;
+    //foreign key-producton order
+    private Long production_orders;
     @NotBlank
-    //foreign key
-    private CarModel carModel;
+    //foreign key-carModel
+    private long carModel;
     @NotBlank
     private String color;
     @Enumerated(EnumType.STRING)

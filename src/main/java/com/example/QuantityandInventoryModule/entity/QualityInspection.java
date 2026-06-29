@@ -1,12 +1,13 @@
 package com.example.QuantityandInventoryModule.entity;
 
-import com.example.EmployeeCustomerModule.entity.Employee;
-import com.example.ProductionModule.entity.ProductionOrders;
 import com.example.QuantityandInventoryModule.InspectionResult;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -17,20 +18,22 @@ public class QualityInspection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-   @GeneratedValue(strategy = GenerationType.AUTO)
+
     private String inspection_number;
-   //foreign key
-    private ProductionOrders production_order;
-    //foreign key
-    private Employee inspector;
+   //foreign key-production order
+    private Long production_order;
+    //foreign key-employee
+    private Long inspector;
     @Enumerated(EnumType.STRING)
     private InspectionResult inspection_result;
     private String remarks;
     private LocalDateTime inspected_at;
     @CreationTimestamp
     private LocalDateTime created_at;
+    @CreatedBy
     private String created_by;
     @UpdateTimestamp
     private LocalDateTime last_modified_at;
+    @LastModifiedBy
     private String last_modified_by;
 }
