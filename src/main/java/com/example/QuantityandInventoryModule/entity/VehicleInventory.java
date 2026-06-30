@@ -1,12 +1,13 @@
 package com.example.QuantityandInventoryModule.entity;
 
-import com.example.PlantsCarModule.entity.CarModel;
-import com.example.ProductionModule.entity.ProductionOrders;
 import com.example.QuantityandInventoryModule.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,10 +21,10 @@ public class VehicleInventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
         private String vin;
-        //foreign key
-     private ProductionOrders production_orders;
-     //foreign key
-    private CarModel carModel;
+        //foreign key-production order
+     private Long production_orders;
+     //foreign key-car-model
+    private Long carModel;
     private String color;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -32,6 +33,8 @@ public class VehicleInventory {
     private LocalDateTime created_at;
     @UpdateTimestamp
     private LocalDateTime last_modified_at;
+    @CreatedBy
     private String created_by;
+    @LastModifiedBy
     private String last_modified_by;
 }

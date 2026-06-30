@@ -1,7 +1,5 @@
 package com.example.QuantityandInventoryModule.dto;
 
-import com.example.EmployeeCustomerModule.entity.Employee;
-import com.example.ProductionModule.entity.ProductionOrders;
 import com.example.QuantityandInventoryModule.InspectionResult;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -15,11 +13,11 @@ import java.time.LocalDateTime;
 public class QualityInspectionDto {
 
     private String inspection_number;
-    //foreign key
-    private ProductionOrders production_order;
-    //foreign key
+    //foreign key-production order
+    private Long production_order;
+    //foreign key-employee
     @NotBlank
-    private Employee inspector;
+    private Long inspector;
     @Enumerated(EnumType.STRING)
     private InspectionResult inspection_result;
     private String remarks;

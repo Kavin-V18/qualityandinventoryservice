@@ -11,7 +11,7 @@ public class VehicleInventoryMapper {
         if (vehicleInventory == null) return null;
 
         return VehicleInventoryDto.builder().color(vehicleInventory.getColor()).
-                id(vehicleInventory.getId()).vin(vehicleInventory.getVin()).
+               vin(vehicleInventory.getVin()).
                 created_by(vehicleInventory.getCreated_by()).
                 manufactured_date(vehicleInventory.getManufactured_date()).
                 status(vehicleInventory.getStatus()).
@@ -25,7 +25,6 @@ public class VehicleInventoryMapper {
     public VehicleInventory toEntity(VehicleInventoryDto dto) {
         if (dto == null) return null;
         VehicleInventory vehicleInventory = new VehicleInventory();
-        vehicleInventory.setId(dto.getId());
         vehicleInventory.setColor(dto.getColor());
         vehicleInventory.setVin(dto.getVin());
         vehicleInventory.setManufactured_date(dto.getManufactured_date());
