@@ -4,6 +4,8 @@ import com.example.QuantityandInventoryModule.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.SoftDeleteType;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "vehicleinventory",schema = "public")
 @Entity
 @Data
+@SoftDelete(strategy = SoftDeleteType.DELETED, columnName = "deleted")
 public class VehicleInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,7 @@ public class VehicleInventory {
     private Long carModel;
     private String color;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
     private LocalDate manufactured_date;
     @CreationTimestamp
@@ -34,7 +38,9 @@ public class VehicleInventory {
     @UpdateTimestamp
     private LocalDateTime last_modified_at;
     @CreatedBy
-    private String created_by;
+    private Long created_by;
     @LastModifiedBy
-    private String last_modified_by;
+    private Long last_modified_by;
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
 }
