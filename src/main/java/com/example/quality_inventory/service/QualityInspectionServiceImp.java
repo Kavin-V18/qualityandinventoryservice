@@ -3,18 +3,21 @@ package com.example.quality_inventory.service;
 import com.example.quality_inventory.client.EmployeeCustomerClient;
 import com.example.quality_inventory.client.ProductionClient;
 import com.example.quality_inventory.dto.EmployeeDto;
-import com.example.quality_inventory.dto.ProductionOrdersDto;
 import com.example.quality_inventory.dto.QualityInspectionDto;
 import com.example.quality_inventory.entity.QualityInspection;
 import com.example.quality_inventory.repository.QualityInspectionRepository;
+import com.example.quality_inventory.util.EmployeeResponse;
+import com.example.quality_inventory.util.ProductionOrderResponse;
 import com.example.quality_inventory.util.QualityInspectionMapper;
 import com.example.quality_inventory.util.QualityResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class QualityInspectionServiceImp implements QualityInspecttionService{
       private final QualityInspectionRepository qualityInspectionRepository;
       private final QualityInspectionMapper qualityInspectionMapper;
@@ -38,12 +41,14 @@ public class QualityInspectionServiceImp implements QualityInspecttionService{
     @Override
     public QualityResponse getQualityInspectionDtoById(int id) {
         QualityInspection existing=qualityInspectionRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No data present in this id"));
-        ProductionOrdersDto order=productionClient.getOrderById(existing.getProductionOrder()).getBody();
-        EmployeeDto employee=employeeCustomerClient.getEmployeeById(existing.getInspector()).getBody();
+        log.info("order response*****"+productionClient.getOrderById(existing.getProductionOrder()).getBody());
+        ProductionOrderResponse order=productionClient.getOrderById(existing.getProductionOrder()).getBody();
+        EmployeeResponse employee=employeeCustomerClient.getEmployeeById(existing.getInspector()).getBody();
         QualityResponse response =new QualityResponse();
         response.setEmployee(employee);
         response.setProductionOrder(order);
         response.setQuality( qualityInspectionMapper.toDto(existing));
+        log.info("response from quality inspection******"+response);
         return response;
     }
     @Override
@@ -58,7 +63,7 @@ public class QualityInspectionServiceImp implements QualityInspecttionService{
         }
         Boolean employeeExist=employeeCustomerClient.checkEmployeeExists(qualityInspectionDto.getInspector()).getBody();
         if (Boolean.FALSE.equals(employeeExist)) {
-            throw new EntityNotFoundException("Production Order not found with id : " + qualityInspectionDto.getInspector());
+            throw new EntityNotFoundException("Inspector not found with id : " + qualityInspectionDto.getInspector());
         }
         QualityInspection existing=qualityInspectionRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No data present in this id"));
         existing.setInspectedAt(qualityInspectionDto.getInspectedAt());

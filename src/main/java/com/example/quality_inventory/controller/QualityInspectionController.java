@@ -5,12 +5,14 @@ import com.example.quality_inventory.service.QualityInspecttionService;
 import com.example.quality_inventory.util.QualityResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/qualityinspection")
 @RequiredArgsConstructor
+@Slf4j
 public class QualityInspectionController {
     private final QualityInspecttionService  qualityInspecttionService;
 

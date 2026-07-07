@@ -3,11 +3,11 @@ package com.example.quality_inventory.service;
 import com.example.quality_inventory.client.CarPlantClient;
 import com.example.quality_inventory.client.ProductionClient;
 import com.example.quality_inventory.dto.CarModelDto;
-import com.example.quality_inventory.dto.ProductionOrdersDto;
 import com.example.quality_inventory.dto.VehicleInventoryDto;
 import com.example.quality_inventory.entity.VehicleInventory;
 import com.example.quality_inventory.repository.VehicleInventoryRepository;
 import com.example.quality_inventory.util.InventoryResponse;
+import com.example.quality_inventory.util.ProductionOrderResponse;
 import com.example.quality_inventory.util.VehicleInventoryMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class VehicleInventoryServiceImp implements VehicleInventoryService {
     public InventoryResponse getVehicleInventoryDtoById(int id) {
         VehicleInventory existing=vehicleInventoryRepository.findById(id).orElseThrow(()->new EntityNotFoundException("No data present in this id"));
         CarModelDto model = carPlantClient.getCarModelById(existing.getCarModel()).getBody();
-        ProductionOrdersDto order=productionClient.getOrderById(existing.getProductionOrders()).getBody();
+        ProductionOrderResponse order=productionClient.getOrderById(existing.getProductionOrders()).getBody();
         InventoryResponse response =new InventoryResponse();
            response.setCarModel(model);
            response.setProductionOrders(order);
