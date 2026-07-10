@@ -17,8 +17,8 @@ public class ProductionOrdersDto {
     //foreignkey-car model
     private Long carModel;
     private String status;
-    private int targetQuantity;
-    private int completedQuantity;
+    private Integer targetQuantity;
+    private Integer completedQuantity;
     private LocalDate expectedEndDate;
     private LocalDate actualEndDate;
     private LocalDate createdAt;

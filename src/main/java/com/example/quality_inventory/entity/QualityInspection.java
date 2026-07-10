@@ -1,6 +1,7 @@
 package com.example.quality_inventory.entity;
 
 import com.example.quality_inventory.InspectionResult;
+import com.example.quality_inventory.util.ModelAuditListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,13 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="qualityinspection",schema = "public")
 @Data
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, ModelAuditListener.class})
 @SoftDelete(strategy = SoftDeleteType.ACTIVE)
 public class QualityInspection {
     @Id

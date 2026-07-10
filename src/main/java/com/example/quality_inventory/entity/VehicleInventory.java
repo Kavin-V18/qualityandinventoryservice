@@ -1,6 +1,7 @@
 package com.example.quality_inventory.entity;
 
 import com.example.quality_inventory.Status;
+import com.example.quality_inventory.util.ModelAuditListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(name = "vehicleinventory",schema = "public")
 @Entity
 @Data
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, ModelAuditListener.class})
 @SoftDelete(strategy = SoftDeleteType.ACTIVE)
 public class VehicleInventory {
     @Id
