@@ -12,4 +12,5 @@ public interface VehicleInventoryService {
     List<VehicleInventoryDto> getAllVehicleInventoryDto();
     VehicleInventoryDto updateVehicleInventoryDto(int id, VehicleInventoryDto vehicleInventoryDto);
     String deleteVehicleInventoryDto(int id);
+    Boolean existById(int id);
 }

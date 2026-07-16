@@ -78,4 +78,8 @@ public class VehicleInventoryServiceImp implements VehicleInventoryService {
         vehicleInventoryRepository.deleteById(id);
         return "deleted successfully";
     }
+    @Override
+    public Boolean existById(int id) {
+        return vehicleInventoryRepository.existsById(id);
+    }
 }

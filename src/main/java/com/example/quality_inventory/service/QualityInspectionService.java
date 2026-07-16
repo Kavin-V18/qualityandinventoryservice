@@ -6,7 +6,7 @@ import com.example.quality_inventory.util.QualityResponse;
 
 import java.util.List;
 
-public interface QualityInspecttionService {
+public interface QualityInspectionService {
 
     QualityInspectionDto createQualityInspectionDto(QualityInspectionDto qualityInspectionDto);
     QualityResponse getQualityInspectionDtoById(int id);

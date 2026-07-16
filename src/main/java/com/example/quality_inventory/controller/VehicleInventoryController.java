@@ -16,25 +16,29 @@ public class VehicleInventoryController {
     private final VehicleInventoryService vehicleInventoryService;
 
     @GetMapping()
-    public List<VehicleInventoryDto> getQualityInspectionDto() {
+    public List<VehicleInventoryDto> getVehicleInventoryDto() {
         return vehicleInventoryService.getAllVehicleInventoryDto();
     }
     @PostMapping()
-    public  String createQualityInspectionDto(@Valid @RequestBody VehicleInventoryDto vehicleInventoryDto){
+    public  String createVehicleInventoryDto(@Valid @RequestBody VehicleInventoryDto vehicleInventoryDto){
         vehicleInventoryService.createVehicleInventoryDto(vehicleInventoryDto);
         return  "QualityInspection Created Successfully";
     }
     @GetMapping("/{id}")
-    public InventoryResponse getQualityInspectionDtoById(@PathVariable int id){
+    public InventoryResponse getVehicleInventoryDtoById(@PathVariable int id){
         return vehicleInventoryService.getVehicleInventoryDtoById(id);
     }
-    @PostMapping("/{id}")
-    public VehicleInventoryDto updateQualityInspectionDto(@PathVariable int id,@Valid @RequestBody VehicleInventoryDto vehicleInventoryDto){
+    @PutMapping("/{id}")
+    public VehicleInventoryDto updateVehicleInventoryDto(@PathVariable int id,@Valid @RequestBody VehicleInventoryDto vehicleInventoryDto){
         return  vehicleInventoryService.updateVehicleInventoryDto(id, vehicleInventoryDto);
     }
     @DeleteMapping("/{id}")
-    public String deleteQualityInspectionDto(@PathVariable int id){
+    public String deleteVehicleInventoryDto(@PathVariable int id){
         vehicleInventoryService.deleteVehicleInventoryDto(id);
         return "QualityInspection Deleted Successfully";
+    }
+    @GetMapping("/{id}/exists")
+    Boolean checkInventoryExists(@PathVariable("id") int id){
+        return vehicleInventoryService.existById(id);
     }
 }

@@ -1,15 +1,14 @@
 package com.example.quality_inventory.service;
 
+import com.example.quality_inventory.InspectionResult;
 import com.example.quality_inventory.client.EmployeeCustomerClient;
+import com.example.quality_inventory.client.NotificationClient;
 import com.example.quality_inventory.client.ProductionClient;
-import com.example.quality_inventory.dto.EmployeeDto;
+import com.example.quality_inventory.dto.NotificationDto;
 import com.example.quality_inventory.dto.QualityInspectionDto;
 import com.example.quality_inventory.entity.QualityInspection;
 import com.example.quality_inventory.repository.QualityInspectionRepository;
-import com.example.quality_inventory.util.EmployeeResponse;
-import com.example.quality_inventory.util.ProductionOrderResponse;
-import com.example.quality_inventory.util.QualityInspectionMapper;
-import com.example.quality_inventory.util.QualityResponse;
+import com.example.quality_inventory.util.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +17,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class QualityInspectionServiceImp implements QualityInspecttionService{
+public class QualityInspectionServiceImp implements QualityInspectionService {
       private final QualityInspectionRepository qualityInspectionRepository;
       private final QualityInspectionMapper qualityInspectionMapper;
     private final ProductionClient productionClient;
     private final EmployeeCustomerClient employeeCustomerClient;
+    private final NotificationClient notificationClient;
     @Override
     public QualityInspectionDto createQualityInspectionDto(QualityInspectionDto qualityInspectionDto) {
         Boolean productionExist=productionClient.checkOrderExists(qualityInspectionDto.getProductionOrder()).getBody();
@@ -72,6 +72,12 @@ public class QualityInspectionServiceImp implements QualityInspecttionService{
         existing.setInspector(qualityInspectionDto.getInspector());
         existing.setProductionOrder(qualityInspectionDto.getProductionOrder());
         existing.setInspectionResult(qualityInspectionDto.getInspectionResult());
+                if(existing.getInspectionResult()==InspectionResult.PASS||existing.getInspectionResult()==InspectionResult.PENDING||existing.getInspectionResult()==InspectionResult.FAIL){
+                    NotificationDto dto=new NotificationDto();
+                    dto.setNotificationType(NotificationType.QC_FAIL);
+                    dto.setRecipientRole(RecipientRole.PLANT_MANAGER);
+                    notificationClient.sendNotificationTrigger(dto);
+                }
         QualityInspection savedEntity = qualityInspectionRepository.save(existing);
         return qualityInspectionMapper.toDto(savedEntity);
     }

@@ -18,7 +18,7 @@ public class CarModelDto {
     private String modelName;
     private String fuelType;
     private String transmission;
-    private double basePrice;
+    private Double basePrice;
     private List<String> colorOptions;
     private LocalDate launchDate;
     @ColumnDefault("true")

@@ -1,7 +1,7 @@
 package com.example.quality_inventory.controller;
 
 import com.example.quality_inventory.dto.QualityInspectionDto;
-import com.example.quality_inventory.service.QualityInspecttionService;
+import com.example.quality_inventory.service.QualityInspectionService;
 import com.example.quality_inventory.util.QualityResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class QualityInspectionController {
-    private final QualityInspecttionService  qualityInspecttionService;
+    private final QualityInspectionService qualityInspecttionService;
 
     @GetMapping()
     public List<QualityInspectionDto> getQualityInspectionDto() {
@@ -29,7 +29,7 @@ public class QualityInspectionController {
     public QualityResponse getQualityInspectionDtoById(@PathVariable int id){
         return qualityInspecttionService.getQualityInspectionDtoById(id);
     }
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public QualityInspectionDto updateQualityInspectionDto(@PathVariable int id,@Valid @RequestBody QualityInspectionDto qualityInspectionDto){
         return  qualityInspecttionService.updateQualityInspectionDto(id, qualityInspectionDto);
     }
